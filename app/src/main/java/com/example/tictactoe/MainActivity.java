@@ -1,6 +1,7 @@
 package com.example.tictactoe;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -155,33 +156,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //Reset board
     private void resetBoard() {
+        Handler mHandler = new Handler();
 
-
-        Thread thread = new Thread() {
+        Runnable runn = new Runnable() {
             @Override
             public void run() {
-                try {
-                    sleep(8000);
-                    Log.e("Sleep 1Error", "Sleep Error");
-                } catch (Exception e){
-                    e.printStackTrace();
-                } finally {
-                    Log.e("Sleep Error", "Sleep Error");
+
+                //Reset X and O
+                for (int i = 0; i < 3; i++){
+                    for(int j = 0; j < 3; j++){
+                        bt[i][j].setText("");
+                    }
                 }
+
+                roundCount = 0;
+                player1Turn = true;
             }
         };
-        thread.start();
 
-
-        //Reset X and O
-        for (int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                bt[i][j].setText("");
-            }
-        }
-
-        roundCount = 0;
-        player1Turn = true;
+        mHandler.postDelayed(runn, 2000);
     }
 
 
