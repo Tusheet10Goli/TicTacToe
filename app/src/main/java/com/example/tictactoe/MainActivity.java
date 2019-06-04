@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void resetBoard() {
         Handler mHandler = new Handler();
 
-        Runnable runn = new Runnable() {
+        Runnable mRunnable = new Runnable() {
             @Override
             public void run() {
 
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
 
-        mHandler.postDelayed(runn, 2000);
+        mHandler.postDelayed(mRunnable, 2000);
     }
 
 
