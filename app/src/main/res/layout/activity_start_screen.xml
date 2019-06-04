@@ -51,19 +51,19 @@
 
     <ImageView
         android:id="@+id/img2"
-        android:layout_width="403dp"
-        android:layout_height="84dp"
+        android:layout_width="492dp"
+        android:layout_height="92dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.94"
-        app:srcCompat="@drawable/loading"
-        android:contentDescription="@string/todo" />
+        app:srcCompat="@drawable/loading" />
 </android.support.constraint.ConstraintLayout>

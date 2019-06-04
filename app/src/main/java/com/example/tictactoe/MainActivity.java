@@ -1,10 +1,9 @@
 package com.example.tictactoe;
 
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -60,8 +59,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Drawing block
         if (player1Turn) {
             ((Button) v).setText("X");
+            ((Button) v).setTextColor(Color.RED);
         } else {
             ((Button) v).setText("O");
+            ((Button) v).setTextColor(Color.BLACK);
         }
         roundCount++;
 
@@ -178,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    //Complete reset the game
+    //Completely reset the game
     private void resetGame() {
         Toast.makeText(this, "Game is reset!", Toast.LENGTH_SHORT).show();
         player1Points = 0;
