@@ -1,6 +1,5 @@
 package com.example.tictactoe;
 
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private Board boardObject = new Board();
     private Button[][] bt = new Button[3][3];
     private boolean player1Turn = true;
     private int roundCount;
@@ -33,8 +33,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for (int j = 0; j < 3; j++) {
                 String btid = "bt" + i + j;
                 int resID = getResources().getIdentifier(btid, "id", getPackageName());
-                bt[i][j] = (Button) findViewById(resID);
-                bt[i][j].setOnClickListener(this);
+                boardObject.initializeBoardLocation(i, j, (Button) findViewById(resID));
+                Button btn = boardObject.getBoardLocation(i, j);
+                btn.setOnClickListener(this);
             }
         }
 
@@ -55,73 +56,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!((Button) v).getText().toString().equals("")) {
             return;
         }
-
-        //Drawing block
-        if (player1Turn) {
-            ((Button) v).setText("X");
-            ((Button) v).setTextColor(Color.RED);
-        } else {
-            ((Button) v).setText("O");
-            ((Button) v).setTextColor(Color.BLACK);
-        }
-        roundCount++;
+        boardObject.performTurn((Button) v);
+        int winCondition = boardObject.checkWin();
 
         //Logic block - check for winner or draw and then switch turns
-        if (checkForWin()){
-            if (player1Turn) {
-                player1Wins();
-            } else {
-                player2Wins();
-            }
-        } else if (roundCount == 9) {
+        if (winCondition == 1) {
+            player1Wins();
+        } else if (winCondition == 2) {
+            player2Wins();
+        } else if (winCondition == 3) {
             draw();
-        } else {
-            player1Turn = !player1Turn;
         }
     }
-
-
-    //Checks for a winner
-    private boolean checkForWin() {
-        String[][] field = new String[3][3];
-
-        for (int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                field[i][j] = bt[i][j].getText().toString();
-            }
-        }
-
-        //row check
-        for (int i = 0; i < 3; i++) {
-            if(field[i][0].equals(field[i][1]) && field[i][0].equals(field[i][2])
-                    && !field[i][0].equals("")) {
-                return true;
-            }
-        }
-
-        //column check
-        for (int i = 0; i < 3; i++) {
-            if(field[0][i].equals(field[1][i]) && field[0][i].equals(field[2][i])
-                    && !field[0][i].equals("")) {
-                return true;
-            }
-        }
-
-        //diagonal 1 check
-        if(field[0][0].equals(field[1][1]) && field[0][0].equals(field[2][2])
-                && !field[0][0].equals("")) {
-            return true;
-        }
-
-        //diagonal 2 check
-        if(field[0][2].equals(field[1][1]) && field[0][2].equals(field[2][0])
-                && !field[0][2].equals("")) {
-            return true;
-        }
-
-        return false;
-    }
-
 
     //Player 1 wins
     private void player1Wins() {
@@ -162,16 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Runnable mRunnable = new Runnable() {
             @Override
             public void run() {
-
-                //Reset X and O
-                for (int i = 0; i < 3; i++){
-                    for(int j = 0; j < 3; j++){
-                        bt[i][j].setText("");
-                    }
-                }
-
-                roundCount = 0;
-                player1Turn = true;
+                boardObject.resetBoard();
             }
         };
 
