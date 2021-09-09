@@ -16,9 +16,11 @@ public class Board {
     public void initializeBoardLocation(int row, int column, Button btn) {
         board[row][column] = btn;
     }
+
     public Button getBoardLocation(int row, int column) {
         return board[row][column];
     }
+
     public void performTurn(Button btn) {
         if (playerTurn == 1) {
             btn.setText("X");
@@ -30,6 +32,7 @@ public class Board {
         turnCount++;
         playerTurn =  playerTurn == 2 ? 1: 2;
     }
+
     public int checkWin() {
         if (checkForWin()) {
             return playerTurn;
@@ -39,6 +42,7 @@ public class Board {
         }
         return 0;
     }
+
     public void resetBoard() {
         //Reset X and O
         for (int i = 0; i < 3; i++){
@@ -46,13 +50,12 @@ public class Board {
                 board[i][j].setText("");
             }
         }
-
         turnCount = 0;
         playerTurn = 1;
     }
+
     private boolean checkForWin() {
         String[][] field = new String[3][3];
-
         for (int i = 0; i < 3; i++){
             for(int j = 0; j < 3; j++){
                 field[i][j] = board[i][j].getText().toString();
@@ -86,7 +89,6 @@ public class Board {
                 && !field[0][2].equals("")) {
             return true;
         }
-
         return false;
     }
 }
