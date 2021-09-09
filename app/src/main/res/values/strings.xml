@@ -14,16 +14,4 @@
     <string name="number_of_attempts_remaining_5">Number Of Attempts Remaining : 5</string>
     <string name="username_password_is_incorrect_do_you_want_to_try_again">USERNAME/PASSWORD IS INCORRECT. DO YOU WANT TO TRY AGAIN?</string>
     <string name="try_again">Try Again</string>
-    <string name="tusheet_goli">Tusheet Goli</string>
-    <string name="divide">divide</string>
-    <string name="multiply">multiply</string>
-    <string name="add">add</string>
-    <string name="subtract">subtract</string>
-    <string name="calculator">Calculator</string>
-    <string name="google_search">Google Search</string>
-    <string name="tusheet">Tusheet</string>
-    <string name="roll">Roll</string>
-    <string name="how_many">How Many?</string>
-    <string name="textview">TextView</string>
-    <string name="randomizer">Randomizer</string>
 </resources>
