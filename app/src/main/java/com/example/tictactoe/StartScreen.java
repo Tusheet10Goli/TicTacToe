@@ -15,7 +15,7 @@ public class StartScreen extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    sleep(2000);
+                    sleep(5000);
                 } catch (Exception e){
                     e.printStackTrace();
                 } finally {
