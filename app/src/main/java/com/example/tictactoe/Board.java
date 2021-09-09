@@ -5,12 +5,12 @@ import android.widget.Button;
 public class Board {
     private Button[][] board;
     private int playerTurn;
-    private int roundCount;
+    private int turnCount;
 
     public Board() {
         board = new Button[3][3];
         playerTurn = 1;
-        roundCount = 0;
+        turnCount = 0;
     }
 
     public void initializeBoardLocation(int row, int column, Button btn) {
@@ -27,16 +27,14 @@ public class Board {
             btn.setText("O");
             btn.setTextColor(Color.BLACK);
         }
-        if (playerTurn == 2) {
-            roundCount++;
-        }
+        turnCount++;
         playerTurn =  playerTurn == 2 ? 1: 2;
     }
     public int checkWin() {
         if (checkForWin()) {
             return playerTurn;
         }
-        if (roundCount == 9) {
+        if (turnCount == 9) {
             return 3;
         }
         return 0;
@@ -49,7 +47,7 @@ public class Board {
             }
         }
 
-        roundCount = 0;
+        turnCount = 0;
         playerTurn = 1;
     }
     private boolean checkForWin() {
