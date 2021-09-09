@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int player2Points;
     private TextView tv1, tv2;
 
-
     //OnCreate method
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-
     //On click functionality
     @Override
     public void onClick(View v) {
@@ -77,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         resetBoard();
     }
 
-
     //Player 2 wins
     private void player2Wins() {
         player2Points++;
@@ -86,13 +83,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         resetBoard();
     }
 
-
     //Draw
     private void draw() {
         Toast.makeText(this, "Draw!", Toast.LENGTH_SHORT).show();
         resetBoard();
     }
-
 
     //Update the points
     private void updatePointsText() {
@@ -100,21 +95,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv2.setText("Player 2: " + player2Points);
     }
 
-
     //Reset board
     private void resetBoard() {
         Handler mHandler = new Handler();
-
         Runnable mRunnable = new Runnable() {
             @Override
             public void run() {
                 boardObject.resetBoard();
             }
         };
-
         mHandler.postDelayed(mRunnable, 2000);
     }
-
 
     //Completely reset the game
     private void resetGame() {
@@ -125,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         resetBoard();
     }
 
-
     //Save variable data on changing orientation
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -135,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         outState.putInt("player2Points", player2Points);
         outState.putBoolean("player1Turn", player1Turn);
     }
-
 
     //Restore saved variables on orientation change
     @Override
