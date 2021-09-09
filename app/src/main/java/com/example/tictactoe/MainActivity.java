@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int player2Points;
     private TextView tv1, tv2;
 
-
     //OnCreate method
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-
 
     //On click functionality
     @Override
@@ -79,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             player1Turn = !player1Turn;
         }
     }
-
 
     //Checks for a winner
     private boolean checkForWin() {
@@ -122,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-
     //Player 1 wins
     private void player1Wins() {
         player1Points++;
@@ -130,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updatePointsText();
         resetBoard();
     }
-
 
     //Player 2 wins
     private void player2Wins() {
@@ -140,13 +135,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         resetBoard();
     }
 
-
     //Draw
     private void draw() {
         Toast.makeText(this, "Draw!", Toast.LENGTH_SHORT).show();
         resetBoard();
     }
-
 
     //Update the points
     private void updatePointsText() {
@@ -154,30 +147,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv2.setText("Player 2: " + player2Points);
     }
 
-
     //Reset board
     private void resetBoard() {
         Handler mHandler = new Handler();
-
         Runnable mRunnable = new Runnable() {
             @Override
             public void run() {
-
                 //Reset X and O
                 for (int i = 0; i < 3; i++){
                     for(int j = 0; j < 3; j++){
                         bt[i][j].setText("");
                     }
                 }
-
                 roundCount = 0;
                 player1Turn = true;
             }
         };
-
         mHandler.postDelayed(mRunnable, 2000);
     }
-
 
     //Completely reset the game
     private void resetGame() {
@@ -188,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         resetBoard();
     }
 
-
     //Save variable data on changing orientation
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -198,7 +184,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         outState.putInt("player2Points", player2Points);
         outState.putBoolean("player1Turn", player1Turn);
     }
-
 
     //Restore saved variables on orientation change
     @Override
