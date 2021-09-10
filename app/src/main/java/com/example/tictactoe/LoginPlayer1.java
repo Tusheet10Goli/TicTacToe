@@ -2,11 +2,19 @@ package com.example.tictactoe;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.util.Log;
+
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 
 public class LoginPlayer1 extends AppCompatActivity {
 
@@ -36,10 +44,51 @@ public class LoginPlayer1 extends AppCompatActivity {
     }
 
     private void validate(String name, String pass) {
-        if(name.equals("tusheet") && pass.equals("1234") || name.equals("") && pass.equals("")) {
-            Intent intent = new Intent(LoginPlayer1.this, LoginPlayer2.class);
-            startActivity(intent);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference db = database.getReference().child("users");
+
+        if (!name.isEmpty() && !pass.isEmpty()) {
+            db.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot data: dataSnapshot.getChildren()) {
+                        User user_check = data.getValue(User.class);
+                        if (user_check.getName() != null) {
+                            if (!user_check.getName().equals(name)) {
+                                continue;
+                            }
+                            if (user_check.getPassword() != null && user_check.getPassword().equals(pass)) {
+                                Intent intent = new Intent(LoginPlayer1.this, LoginPlayer2.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(LoginPlayer1.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
+                                ctr--;
+                                tv.setText("Number Of Attempts Remaining : " + ctr);
+                                if (ctr == 0) {
+                                    ctr = 5;
+                                    bt.setEnabled(false);
+                                    Intent it = new Intent(LoginPlayer1.this, StartScreen.class);
+                                    startActivity(it);
+                                }
+                                break;
+                            }
+                        } else {
+                            User user = new User(name, pass, 0, 0);
+                            db.child(name).setValue(user);
+                            Intent intent = new Intent(LoginPlayer1.this, LoginPlayer2.class);
+                            startActivity(intent);
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError firebaseError) {
+                    Toast.makeText(LoginPlayer1.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+            });
         } else {
+            Toast.makeText(LoginPlayer1.this, "Illegal Username/Password", Toast.LENGTH_SHORT).show();
             ctr--;
             tv.setText("Number Of Attempts Remaining : " + ctr);
             if (ctr == 0) {

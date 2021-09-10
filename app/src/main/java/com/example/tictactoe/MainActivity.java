@@ -1,12 +1,13 @@
 package com.example.tictactoe;
 
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -43,6 +44,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 resetGame();
+            }
+        });
+
+        Button end = (Button) findViewById(R.id.end);
+        end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endGame();
             }
         });
     }
@@ -114,6 +123,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         player2Points = 0;
         updatePointsText();
         resetBoard();
+    }
+
+    //Completely end the game
+    private void endGame() {
+        Intent intent = new Intent(MainActivity.this, EndScreen.class);
+        startActivity(intent);
     }
 
     //Save variable data on changing orientation

@@ -4,12 +4,12 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class StartScreen extends AppCompatActivity {
+public class EndScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_screen);
+        setContentView(R.layout.activity_end_screen);
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -18,7 +18,7 @@ public class StartScreen extends AppCompatActivity {
                 } catch (Exception e){
                     e.printStackTrace();
                 } finally {
-                    Intent intent = new Intent(StartScreen.this, LoginPlayer1.class);
+                    Intent intent = new Intent(EndScreen.this, StartScreen.class);
                     startActivity(intent);
                 }
             }
