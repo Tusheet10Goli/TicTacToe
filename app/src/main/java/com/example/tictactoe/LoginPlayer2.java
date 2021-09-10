@@ -2,11 +2,14 @@ package com.example.tictactoe;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
 
 public class LoginPlayer2 extends AppCompatActivity {
 
@@ -36,7 +39,12 @@ public class LoginPlayer2 extends AppCompatActivity {
     }
 
     private void validate(String name, String pass) {
-        if(name.equals("tusheet") && pass.equals("1234") || name.equals("") && pass.equals("")) {
+        if(true) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference db = database.getReference("users");
+            User user = new User(name, pass, 0, 0);
+            db.child(name).setValue(user);
+
             Intent intent = new Intent(LoginPlayer2.this, MainActivity.class);
             startActivity(intent);
         } else {
