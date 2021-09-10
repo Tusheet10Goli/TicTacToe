@@ -45,18 +45,16 @@ public class LoginPlayer2 extends AppCompatActivity {
 
     private void validate(String name, String pass) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference db = database.getReference("users");
+        DatabaseReference db = database.getReference().child("users");
 
         if (!name.isEmpty() && !pass.isEmpty()) {
             db.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot data: dataSnapshot.getChildren()){
-                        if (data.child(name).exists()) {
-                            String password = data.child(name).child("password").toString();
-                            Log.e("LoginPlayer2", password);
-
-                            if (password.equals(pass)) {
+                        User user_check = data.getValue(User.class);
+                        if (user_check.getName() != null && user_check.getName().equals(name)) {
+                            if (user_check.getPassword() != null && user_check.getPassword().equals(pass)) {
                                 Intent intent = new Intent(LoginPlayer2.this, MainActivity.class);
                                 startActivity(intent);
                             } else {
@@ -69,12 +67,14 @@ public class LoginPlayer2 extends AppCompatActivity {
                                     Intent it = new Intent(LoginPlayer2.this, StartScreen.class);
                                     startActivity(it);
                                 }
+                                break;
                             }
                         } else {
                             User user = new User(name, pass, 0, 0);
                             db.child(name).setValue(user);
                             Intent intent = new Intent(LoginPlayer2.this, MainActivity.class);
                             startActivity(intent);
+                            break;
                         }
                     }
                 }
