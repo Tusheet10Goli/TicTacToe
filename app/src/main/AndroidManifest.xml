@@ -13,6 +13,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         >
         <activity android:name=".MainActivity" />
+        <activity android:name=".EndScreen" />
         <activity android:name=".StartScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

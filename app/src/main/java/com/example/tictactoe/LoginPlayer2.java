@@ -53,7 +53,10 @@ public class LoginPlayer2 extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot data: dataSnapshot.getChildren()){
                         User user_check = data.getValue(User.class);
-                        if (user_check.getName() != null && user_check.getName().equals(name)) {
+                        if (user_check.getName() != null) {
+                            if (!user_check.getName().equals(name)) {
+                                continue;
+                            }
                             if (user_check.getPassword() != null && user_check.getPassword().equals(pass)) {
                                 Intent intent = new Intent(LoginPlayer2.this, MainActivity.class);
                                 startActivity(intent);

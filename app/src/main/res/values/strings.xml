@@ -5,6 +5,7 @@
     <string name="tic_tac_toe">TIC TAC TOE</string>
     <string name="todo">TODO</string>
     <string name="reset">Reset</string>
+    <string name="end">End</string>
     <string name="name">Name</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
