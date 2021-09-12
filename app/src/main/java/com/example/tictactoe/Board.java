@@ -35,7 +35,7 @@ public class Board {
 
     public int checkWin() {
         if (checkForWin()) {
-            return playerTurn;
+            return playerTurn == 2 ? 1: 2;
         }
         if (turnCount == 9) {
             return 3;
