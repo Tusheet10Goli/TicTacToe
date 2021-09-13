@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Log;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 
 public class LoginPlayer1 extends AppCompatActivity {
 
+    private static String player_name;
     private EditText name;
     private EditText pass;
     private TextView tv;
@@ -28,7 +28,6 @@ public class LoginPlayer1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login1);
-
         name = (EditText) findViewById(R.id.name);
         pass = (EditText) findViewById(R.id.pass);
         tv = (TextView) findViewById(R.id.tv);
@@ -39,24 +38,38 @@ public class LoginPlayer1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 validate(name.getText().toString(), pass.getText().toString());
+                player_name = name.getText().toString();
             }
         });
+
     }
 
+    public static void updateWin() {
+        UserUpdater.updateUserAddWin(player_name);
+    }
+    public static void updateLoss() {
+       UserUpdater.updateUserAddLoss(player_name);
+    }
+    public static String getName() {
+        return player_name;
+    }
     private void validate(String name, String pass) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference db = database.getReference().child("users");
+
 
         if (!name.isEmpty() && !pass.isEmpty()) {
             db.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    boolean userFoundFlag = false;
                     for (DataSnapshot data: dataSnapshot.getChildren()) {
                         User user_check = data.getValue(User.class);
                         if (user_check.getName() != null) {
                             if (!user_check.getName().equals(name)) {
                                 continue;
                             }
+                            userFoundFlag = true;
                             if (user_check.getPassword() != null && user_check.getPassword().equals(pass)) {
                                 Intent intent = new Intent(LoginPlayer1.this, LoginPlayer2.class);
                                 startActivity(intent);
@@ -72,13 +85,13 @@ public class LoginPlayer1 extends AppCompatActivity {
                                 }
                                 break;
                             }
-                        } else {
-                            User user = new User(name, pass, 0, 0);
-                            db.child(name).setValue(user);
-                            Intent intent = new Intent(LoginPlayer1.this, LoginPlayer2.class);
-                            startActivity(intent);
-                            break;
                         }
+                    }
+                    if (!userFoundFlag) {
+                        User user = new User(name, pass, 0, 0);
+                        db.child(name).setValue(user);
+                        Intent intent = new Intent(LoginPlayer1.this, LoginPlayer2.class);
+                        startActivity(intent);
                     }
                 }
 
