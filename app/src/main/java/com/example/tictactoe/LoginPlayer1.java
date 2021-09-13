@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class LoginPlayer1 extends AppCompatActivity {
 
@@ -34,6 +35,11 @@ public class LoginPlayer1 extends AppCompatActivity {
         bt = (Button) findViewById(R.id.bt);
         tv.setText("Number Of Attempts Remaining : " + ctr);
 
+        FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(this);
+        Bundle params = new Bundle();
+        params.putString("Username", name.getText().toString());
+        analytics.logEvent("User", params);
+
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,16 +53,18 @@ public class LoginPlayer1 extends AppCompatActivity {
     public static void updateWin() {
         UserUpdater.updateUserAddWin(player_name);
     }
+
     public static void updateLoss() {
        UserUpdater.updateUserAddLoss(player_name);
     }
+
     public static String getName() {
         return player_name;
     }
+
     private void validate(String name, String pass) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference db = database.getReference().child("users");
-
 
         if (!name.isEmpty() && !pass.isEmpty()) {
             db.addListenerForSingleValueEvent(new ValueEventListener() {
