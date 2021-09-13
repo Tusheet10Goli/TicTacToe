@@ -52,6 +52,10 @@ public class LoginPlayer2 extends AppCompatActivity {
         UserUpdater.updateUserAddLoss(player_name);
     }
 
+    public static String getName() {
+        return player_name;
+    }
+
     private void validate(String name, String pass) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference db = database.getReference().child("users");

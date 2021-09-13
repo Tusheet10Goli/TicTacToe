@@ -28,7 +28,6 @@ public class LoginPlayer1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login1);
-
         name = (EditText) findViewById(R.id.name);
         pass = (EditText) findViewById(R.id.pass);
         tv = (TextView) findViewById(R.id.tv);
@@ -50,6 +49,9 @@ public class LoginPlayer1 extends AppCompatActivity {
     }
     public static void updateLoss() {
        UserUpdater.updateUserAddLoss(player_name);
+    }
+    public static String getName() {
+        return player_name;
     }
     private void validate(String name, String pass) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
