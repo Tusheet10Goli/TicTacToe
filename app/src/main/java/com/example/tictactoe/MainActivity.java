@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Player 1 wins
     private void player1Wins() {
         player1Points++;
+        LoginPlayer1.updateWin();
+        LoginPlayer2.updateLoss();
         Toast.makeText(this, "Player 1 Wins!", Toast.LENGTH_SHORT).show();
         updatePointsText();
         resetBoard();
@@ -87,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Player 2 wins
     private void player2Wins() {
         player2Points++;
+        LoginPlayer1.updateWin();
+        LoginPlayer1.updateLoss();
         Toast.makeText(this, "Player 2 Wins!", Toast.LENGTH_SHORT).show();
         updatePointsText();
         resetBoard();

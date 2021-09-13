@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Log;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 
 public class LoginPlayer1 extends AppCompatActivity {
 
+    private static String player_name;
     private EditText name;
     private EditText pass;
     private TextView tv;
@@ -39,13 +39,22 @@ public class LoginPlayer1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 validate(name.getText().toString(), pass.getText().toString());
+                player_name = name.getText().toString();
             }
         });
+
     }
 
+    public static void updateWin() {
+        UserUpdater.updateUserAddWin(player_name);
+    }
+    public static void updateLoss() {
+       UserUpdater.updateUserAddLoss(player_name);
+    }
     private void validate(String name, String pass) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference db = database.getReference().child("users");
+
 
         if (!name.isEmpty() && !pass.isEmpty()) {
             db.addListenerForSingleValueEvent(new ValueEventListener() {
